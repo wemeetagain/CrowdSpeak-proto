@@ -12,3 +12,13 @@ Also, since the app uses a decentralized design, the communication should be unc
 
 I see applications for this app wherever there exists a group of people. Whether there's a political rally, a rock concert, or a riot, the crowd WILL be heard.
 
+More details:
+Using WiFi Direct for Ad-hoc communication - http://developer.android.com/guide/topics/connectivity/wifip2p.html
+
+Storing messages in SQLite Database - http://developer.android.com/guide/topics/data/data-storage.html#db
+
+MessageListActivity.java - the main activity that shows the list of currently available messages
+
+MessageThreadActivity.java - the activity used to show a single message thread
+
+MessageNetworkManager.java - the service that handles WiFi Direct connections and broadcasts and receives messages
