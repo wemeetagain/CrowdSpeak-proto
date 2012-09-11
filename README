@@ -1,0 +1,14 @@
+Crowdspeak is a local-area messaging app.
+
+Its part twitter, part reddit, and part ad-hoc communication.
+Like twitter, only short text messages are allowed.
+Like Reddit, messages can be up/downvoted, as well as commented on.
+
+Initially, each message is only visible in the vicinity on the original sender's wifi signal. Each person that upvotes the message will then begin to broadcast the message on their own wifi as well, propogating the message to a larger area. The message can thus be seen in range of all upvoters as well as the original broadcaster.
+
+Ideally, good ideas will be upvoted and spread around, while crappy messages will die from not being seen. This will allow large groups of people to communicate and come to a "concensus" in realtime.
+
+Also, since the app uses a decentralized design, the communication should be uncensorable and able to continue even in the event of no internet connectivity.
+
+I see applications for this app wherever there exists a group of people. Whether there's a political rally, a rock concert, or a riot, the crowd WILL be heard.
+
