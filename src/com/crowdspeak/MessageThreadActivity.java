@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class MessageThreadActivity extends Activity {
@@ -53,6 +54,7 @@ public class MessageThreadActivity extends Activity {
 				   MessageThreadActivity.this.startActivity(myIntent);
 			   		}
 				   });
+	/*
 		TextView numcomments = (TextView)view.findViewById(R.id.message_numcomments);
 		
 		switch (myVote)
@@ -65,9 +67,16 @@ public class MessageThreadActivity extends Activity {
 			break;
 			default: break;
 		}
-		
+	*/	
 		numvotes.setText(cursor.getInt(cursor.getColumnIndex("NUMBEROFVOTES")));
 		message_text.setText(cursor.getString(cursor.getColumnIndex("MESSAGETEXT")));
-		numcomments.setText(cursor.getInt(cursor.getColumnIndex("NUMBEROFCOMMENTS")));
+	//	numcomments.setText(cursor.getInt(cursor.getColumnIndex("NUMBEROFCOMMENTS")));
+		
+		ListView lv = (ListView) this.findViewById(android.R.id.content).findViewById(R.id.message_list);
+	     // //////
+        String [] columns = {"MESSAGEID","PERSONALVOTEVALUE","NUMBEROFVOTES","MESSAGETEXT","NUMBEROFCOMMENTS"};
+        Cursor query = DatabaseInstanceHolder.db.query("MESSAGETABLE", columns, null, null, null, null, "NUMBEROFVOTES");
+        mAdapter = new MessageListAdapter(this,query);
+        lv.setListAdapter(mAdapter);
 	}
 }
