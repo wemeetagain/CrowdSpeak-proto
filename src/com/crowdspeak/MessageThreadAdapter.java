@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class MessageThreadAdapter extends CursorAdapter {
@@ -24,8 +26,8 @@ public class MessageThreadAdapter extends CursorAdapter {
 		int myVote = cursor.getInt(
 				cursor.getColumnIndex("PERSONALVOTEVALUE"));
 		final int messageId = cursor.getColumnIndex("MESSAGEID");
-		String selection = "MESSAGEID = " + messageId;
-		ImageButton upvote = (ImageButton)view.findViewById(R.id.upvote);
+		final String selection = "MESSAGEID = " + messageId;
+		ImageButton upvote = (ImageButton)view.findViewById(R.id.comment_layout_upvote);
 		upvote.setOnClickListener(new OnClickListener() {
 			   public void onClick(View v) {
 				    // TODO Auto-generated method stub
@@ -34,23 +36,22 @@ public class MessageThreadAdapter extends CursorAdapter {
 				   c.getInt(c.getColumnIndex("_id"));  
 			   		}
 				   });
-		ImageButton downvote = (ImageButton)view.findViewById(R.id.downvote);
+		ImageButton downvote = (ImageButton)view.findViewById(R.id.comment_layout_downvote);
 		downvote.setOnClickListener(new OnClickListener() {
 			   public void onClick(View v) {
 				    // TODO Auto-generated method stub
 				   	
 				   }
 				   });
-		TextView numvotes = (TextView)view.findViewById(R.id.numvotes);
-		TextView message_text = (TextView)view.findViewById(R.id.message_text);
+		TextView numvotes = (TextView)view.findViewById(R.id.comment_layout_numvotes);
+		TextView message_text = (TextView)view.findViewById(R.id.comment_layout_message_text);
 		message_text.setOnClickListener(new OnClickListener() {
 			   public void onClick(View v) {
 				    // TODO Auto-generated method stub
 				   	
 			   		}
 				   });
-		TextView numcomments = (TextView)view.findViewById(R.id.numcomments);
-		
+
 		switch (myVote)
 		{
 			case -1:
@@ -62,19 +63,30 @@ public class MessageThreadAdapter extends CursorAdapter {
 			default: break;
 		}
 		
-		numvotes.setText(cursor.getInt(cursor.getColumnIndex("NUMBEROFVOTES")));
+
 		message_text.setText(cursor.getString(cursor.getColumnIndex("MESSAGETEXT")));
-		numcomments.setText(cursor.getInt(cursor.getColumnIndex("NUMBEROFCOMMENTS")));
+
 		
 		//make cursor
-		Cursor
-		//create listview, 
+		Cursor query = DatabaseInstanceHolder.db.rawQuery("SELECT COMMENTID2 AS COMMENTID FROM COMMENTHASCOMMENTTABLE WHERE COMMENTHASCOMMENTTABLE.COMMENTID1 = COMMENTTABLE.COMMENTID JOIN ORDER BY NUMBEROFCOMMENTS", null);
+		//Cursor c = DatabaseInstanceHolder.db.rawQuery("SELECT COMMENTID, COMMENTTEXT, PERSONALVOTEVALUE FROM COMMENTTABLE WHERE COMMENTHASCOMMENTTABLE.COMMENTID1 = COMMENTTABLE.COMMENTID JOIN ORDER BY NUMBEROFCOMMENTS", null);
 		
-		
-		
-		
-		//add to comment_area, create adapter add adapter to listview
-		
+		if(query != null)
+		{
+			LinearLayout ll = (LinearLayout) view.findViewById(R.id.comment_area);
+			
+			//create listview, 
+			ListView lv = new ListView(context);
+			
+			//select the comments wjoin to 
+			//create adapter 
+			MessageThreadAdapter adapter = new MessageThreadAdapter(context,query);
+			
+			//add adapter to listview
+			lv.setAdapter(adapter);
+			//add to comment_area, 
+			ll.addView(lv);
+		}
 	}
 
 	@Override

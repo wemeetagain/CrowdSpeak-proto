@@ -10,17 +10,19 @@
         android:orientation="horizontal" >
 
         <EditText
-            android:id="@+id/editText1"
+            android:id="@+id/create_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="6"
+            android:windowSoftInputMode="stateHidden"
             android:inputType="textMultiLine" />
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/create_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:singleLine="true"
             android:text="@string/submit_message" />
 	</LinearLayout>
     
@@ -29,6 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="6" >
+
     </ListView>
 
  </LinearLayout>

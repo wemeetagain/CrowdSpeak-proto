@@ -1,58 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@id/comment_area"
+    android:id="@+id/comment_area"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_weight="1"
+    android:layout_height="wrap_content"
     android:orientation="vertical" >
 
-	<LinearLayout 
+	<LinearLayout
 	    android:layout_width="match_parent"
-	    android:layout_height="match_parent"
+	    android:layout_height="wrap_content"
 	    android:gravity="top"
 	    android:orientation="horizontal" >
 	
 	    <LinearLayout
 	        android:layout_width="wrap_content"
-	        android:layout_height="match_parent"
-	        android:layout_weight="1"
+	        android:layout_height="wrap_content"
 	        android:orientation="vertical" >
 	
 	        <ImageButton
-	            android:id="@+id/upvote"
+	            android:id="@+id/comment_layout_upvote"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:src="@android:drawable/btn_star" />
+	            android:layout_gravity="center"
+	            android:background="@android:color/transparent"
+	            android:src="@drawable/upvote_selector" />
 	        
 	        <TextView
-	            android:id="@+id/numvotes"
+	            android:id="@+id/comment_layout_numvotes"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
+	            android:layout_gravity="center"
 	            android:text="Small Text"
 	            android:textAppearance="?android:attr/textAppearanceSmall" />
 			
 			<ImageButton
-			    android:id="@+id/downvote"
+			    android:id="@+id/comment_layout_downvote"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
-			    android:src="@android:drawable/btn_star" />
+			    android:layout_gravity="center"
+			    android:background="@android:color/transparent"
+			    android:src="@drawable/downvote_selector" />
 	        
 	    </LinearLayout>
 	
 	    <TextView
-	        android:id="@+id/message_text"
+	        android:id="@+id/comment_layout_message_text"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_weight="4"
+	        android:layout_gravity="center"
 	        android:text="Medium Text"
-	        android:textAppearance="?android:attr/textAppearanceMedium" />
-	
-	    <TextView
-	        android:id="@+id/numcomments"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_weight="1"
-	        android:text="50"
 	        android:textAppearance="?android:attr/textAppearanceMedium" />
 	
 	</LinearLayout>

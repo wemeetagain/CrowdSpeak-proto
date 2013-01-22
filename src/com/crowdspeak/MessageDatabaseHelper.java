@@ -49,25 +49,29 @@ public class MessageDatabaseHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		//create message table
-		db.execSQL("CREATE TABLE" + messageTable + " ( " + messageId + " INTEGER PRIMARY KEY , " + messageBody + " TEXT , " 
-				+ numComments + " INTEGER , " + broadcastBit + " BOOLEAN , " + creationTime + " TIMESTAMP , " + numVotes + " INTEGER , "
+		db.execSQL("DROP TABLE IF EXISTS " + messageTable);
+		db.execSQL("DROP TABLE IF EXISTS " + commentTable);
+		db.execSQL("DROP TABLE IF EXISTS " + neighborTable);
+		
+		db.execSQL("CREATE TABLE " + messageTable + " ( " + messageId + " TEXT PRIMARY KEY , " + messageBody + " TEXT , " 
+				+ numComments + " INTEGER , " + broadcastBit + " INTEGER , " + creationTime + " TEXT , " + numVotes + " INTEGER , "
 				+ broadcasterIP + " TEXT , " + personalVoteValue + " INTEGER , " + messageHash + " TEXT )");
 		//create comment table
-		db.execSQL("CREATE TABLE" + commentTable + " ( " + commentId + " INTEGER PRIMARY KEY , " + commentBody + " TEXT , "
-				+ creationTime + " TIMESTAMP , " + numVotes + " INTEGER , "	+ broadcasterIP + " TEXT , " + personalVoteValue + " INTEGER )");
+		db.execSQL("CREATE TABLE " + commentTable + " ( " + commentId + " TEXT PRIMARY KEY , " + commentBody + " TEXT , "
+				+ creationTime + " TEXT , " + numVotes + " INTEGER , "	+ broadcasterIP + " TEXT , " + personalVoteValue + " INTEGER )");
 		//create neighbors table
-		db.execSQL("CREATE TABLE" + neighborTable + " ( " + neighborIP + " TEXT PRIMARY KEY , " + lastHeardFrom + " TIMESTAMP )");
+		db.execSQL("CREATE TABLE " + neighborTable + " ( " + neighborIP + " TEXT PRIMARY KEY , " + lastHeardFrom + " TIMESTAMP )");
 		//create messagehasneighbor table
-		db.execSQL("CREATE TABLE" + messageHasNeighborTable + " ( " + messageId + " INTEGER PRIMARY KEY, "  + neighborIP
+		db.execSQL("CREATE TABLE " + messageHasNeighborTable + " ( " + messageId + " TEXT PRIMARY KEY, "  + neighborIP
 				+ " TEXT , FOREIGN KEY( " + messageId + " ) REFERENCES " + messageTable + " ( " + messageId + " ) , FOREIGN KEY("
 				+ neighborIP + " ) REFERENCES " + neighborTable + " ( "+ neighborIP + " ) )");
 		//create messagehascomment table
-		db.execSQL("CREATE TABLE" + messageHasCommentTable + " ( " + messageId + " INTEGER PRIMARY KEY, "  + commentId
-				+ " INTEGER , FOREIGN KEY( " + messageId + " ) REFERENCES " + messageTable + " ( " + messageId + " ) , FOREIGN KEY("
+		db.execSQL("CREATE TABLE " + messageHasCommentTable + " ( " + messageId + " TEXT PRIMARY KEY, "  + commentId
+				+ " TEXT , FOREIGN KEY( " + messageId + " ) REFERENCES " + messageTable + " ( " + messageId + " ) , FOREIGN KEY("
 				+ commentId + " ) REFERENCES " + commentTable + " ( "+ commentId + " ) )");	
 		//create commenthascomment table
-		db.execSQL("CREATE TABLE" + commentHasCommentTable + " ( " + commentId1 + " INTEGER PRIMARY KEY, "  + commentId2
-				+ " INTEGER , FOREIGN KEY( " + commentId1 + " ) REFERENCES " + commentTable + " ( " + commentId + " ) )");	
+		db.execSQL("CREATE TABLE " + commentHasCommentTable + " ( " + commentId1 + " TEXT PRIMARY KEY, "  + commentId2
+				+ " TEXT , FOREIGN KEY( " + commentId1 + " ) REFERENCES " + commentTable + " ( " + commentId + " ) )");	
 	}
 
 	@Override

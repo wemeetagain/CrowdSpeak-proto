@@ -1,5 +1,6 @@
 package com.crowdspeak;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 public class MessageListAdapter extends CursorAdapter {
 
@@ -19,54 +21,86 @@ public class MessageListAdapter extends CursorAdapter {
 	}
 	
 	@Override
-	public void bindView(View view, Context context, Cursor cursor) {
+	public void bindView(View view, final Context context, Cursor cursor) {
 		// TODO Auto-generated method stub
 		int myVote = cursor.getInt(
 				cursor.getColumnIndex("PERSONALVOTEVALUE"));
-		final int messageId = cursor.getColumnIndex("MESSAGEID");
-		String selection = "MESSAGEID = " + messageId;
-		ImageButton upvote = (ImageButton)view.findViewById(R.id.upvote);
+		final String messageId = cursor.getString(
+				cursor.getColumnIndex("_id"));
+		final String selection = "MESSAGEID = " + messageId;
+		final ToggleButton upvote = (ToggleButton)view.findViewById(R.id.message_layout_upvote);
+		final ToggleButton downvote = (ToggleButton)view.findViewById(R.id.message_layout_downvote);
 		upvote.setOnClickListener(new OnClickListener() {
 			   public void onClick(View v) {
 				    // TODO Auto-generated method stub
-				   Cursor c = DatabaseInstanceHolder.db.rawQuery("SELECT PERSONALVOTEVALUE AS _id FROM MESSAGE", new String [] {selection});
-				   c.moveToFirst();
-				   c.getInt(c.getColumnIndex("_id"));  
-			   		}
+				   boolean on = ((ToggleButton) v).isChecked();
+				   // Create content values that contains the name of the column you want to update and the value you want to assign to it 
+				   downvote.setChecked(false);
+				   ContentValues cv = new ContentValues();
+				   if(on)
+				   {
+					   cv.put("PERSONALVOTEVALUE", "1");
+					   
+				   }
+				   else
+				   {
+					   cv.put("PERSONALVOTEVALUE", "0");
+				   }
+				   String where = "MESSAGEID=?"; // The where clause to identify which columns to update.
+				   String[] value = { messageId }; // The value for the where clause.
+				   
+				   // Update the database (all columns in TABLE_NAME where my_column has a value of 2 will be changed to 5)
+				   DatabaseInstanceHolder.db.update("MESSAGETABLE", cv, where, value);
+				   }
 				   });
-		ImageButton downvote = (ImageButton)view.findViewById(R.id.downvote);
 		downvote.setOnClickListener(new OnClickListener() {
 			   public void onClick(View v) {
 				    // TODO Auto-generated method stub
-				   	
+				   boolean on = ((ToggleButton) v).isChecked();
+				   // Create content values that contains the name of the column you want to update and the value you want to assign to it 
+				   upvote.setChecked(false);
+				   ContentValues cv = new ContentValues();
+				   if(on)
+				   {
+					   cv.put("PERSONALVOTEVALUE", "-1");
+				   }
+				   else
+				   {
+					   cv.put("PERSONALVOTEVALUE", "0");
+				   }
+				   String where = "MESSAGEID=?"; // The where clause to identify which columns to update.
+				   String[] value = { messageId }; // The value for the where clause.
+
+				   // Update the database (all columns in TABLE_NAME where my_column has a value of 2 will be changed to 5)
+				   DatabaseInstanceHolder.db.update("MESSAGETABLE", cv, where, value);
 				   }
 				   });
-		TextView numvotes = (TextView)view.findViewById(R.id.numvotes);
-		TextView message_text = (TextView)view.findViewById(R.id.message_text);
+		TextView numvotes = (TextView)view.findViewById(R.id.message_layout_numvotes);
+		TextView message_text = (TextView)view.findViewById(R.id.message_layout_text);
 		message_text.setOnClickListener(new OnClickListener() {
 			   public void onClick(View v) {
 				    // TODO Auto-generated method stub
-				   Intent myIntent = new Intent(MainActivity.this, MessageThreadActivity.class);
-				   myIntent.putExtra("message_id", Integer.toString(messageId));
-				   MessageThreadActivity.this.startActivity(myIntent);
+				   Intent myIntent = new Intent(context, MessageThreadActivity.class);
+				   myIntent.putExtra("message_id", messageId);
+				   context.startActivity(myIntent);
 			   		}
 				   });
-		TextView numcomments = (TextView)view.findViewById(R.id.numcomments);
+		TextView numcomments = (TextView)view.findViewById(R.id.message_layout_numcomments);
 		
 		switch (myVote)
 		{
 			case -1:
-			downvote.setSelected(true);
+			downvote.setChecked(true);
 			break;
 			case 1:
-			upvote.setSelected(true);	
+			upvote.setChecked(true);	
 			break;
 			default: break;
 		}
 		
-		numvotes.setText(cursor.getInt(cursor.getColumnIndex("NUMBEROFVOTES")));
+		numvotes.setText(Integer.toString(cursor.getInt(cursor.getColumnIndex("NUMBEROFVOTES"))));
 		message_text.setText(cursor.getString(cursor.getColumnIndex("MESSAGETEXT")));
-		numcomments.setText(cursor.getInt(cursor.getColumnIndex("NUMBEROFCOMMENTS")));
+		numcomments.setText(Integer.toString(cursor.getInt(cursor.getColumnIndex("NUMBEROFCOMMENTS"))));
 		
 	}
 
