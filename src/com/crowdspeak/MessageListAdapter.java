@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.CursorAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -23,22 +24,22 @@ public class MessageListAdapter extends CursorAdapter {
 	@Override
 	public void bindView(View view, final Context context, Cursor cursor) {
 		// TODO Auto-generated method stub
-		int myVote = cursor.getInt(
-				cursor.getColumnIndex("PERSONALVOTEVALUE"));
+		
 		final String messageId = cursor.getString(
 				cursor.getColumnIndex("_id"));
 		final String selection = "MESSAGEID = " + messageId;
 		final ToggleButton upvote = (ToggleButton)view.findViewById(R.id.message_layout_upvote);
 		final ToggleButton downvote = (ToggleButton)view.findViewById(R.id.message_layout_downvote);
-		upvote.setOnClickListener(new OnClickListener() {
-			   public void onClick(View v) {
+		upvote.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+		    public void onCheckedChanged(CompoundButton buttonView, boolean on)
+		    {
 				    // TODO Auto-generated method stub
-				   boolean on = ((ToggleButton) v).isChecked();
 				   // Create content values that contains the name of the column you want to update and the value you want to assign to it 
-				   downvote.setChecked(false);
+				   
 				   ContentValues cv = new ContentValues();
 				   if(on)
 				   {
+					   downvote.setChecked(false);
 					   cv.put("PERSONALVOTEVALUE", "1");
 					   
 				   }
@@ -51,17 +52,17 @@ public class MessageListAdapter extends CursorAdapter {
 				   
 				   // Update the database (all columns in TABLE_NAME where my_column has a value of 2 will be changed to 5)
 				   DatabaseInstanceHolder.db.update("MESSAGETABLE", cv, where, value);
-				   }
-				   });
-		downvote.setOnClickListener(new OnClickListener() {
-			   public void onClick(View v) {
+		    }
+		});
+		downvote.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+		    public void onCheckedChanged(CompoundButton buttonView, boolean on)
+		    {
 				    // TODO Auto-generated method stub
-				   boolean on = ((ToggleButton) v).isChecked();
 				   // Create content values that contains the name of the column you want to update and the value you want to assign to it 
-				   upvote.setChecked(false);
 				   ContentValues cv = new ContentValues();
 				   if(on)
 				   {
+					   upvote.setChecked(false);
 					   cv.put("PERSONALVOTEVALUE", "-1");
 				   }
 				   else
@@ -86,7 +87,8 @@ public class MessageListAdapter extends CursorAdapter {
 			   		}
 				   });
 		TextView numcomments = (TextView)view.findViewById(R.id.message_layout_numcomments);
-		
+		int myVote = cursor.getInt(
+				cursor.getColumnIndex("PERSONALVOTEVALUE"));
 		switch (myVote)
 		{
 			case -1:
