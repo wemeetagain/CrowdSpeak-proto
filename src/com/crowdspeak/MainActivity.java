@@ -62,6 +62,21 @@ public class MainActivity extends Activity{
         lv.setAdapter(mAdapter);
     }
     
+    @Override
+    public void onResume()
+    {
+    	super.onResume();
+    	mAdapter.notifyDataSetChanged();
+    }
+    
+    public void refresh()
+    {
+    	String [] columns = {"MESSAGEID as _id","PERSONALVOTEVALUE","NUMBEROFVOTES","MESSAGETEXT","NUMBEROFCOMMENTS"};
+	    Cursor query = DatabaseInstanceHolder.db.query("MESSAGETABLE", columns, null, null, null, null, "NUMBEROFVOTES");
+	    mAdapter.changeCursor(query);
+    	//mAdapter.notifyDataSetChanged();
+    }
+    
     public void toast(String s)
     {
 			Context context = getApplicationContext();
@@ -81,9 +96,9 @@ public class MainActivity extends Activity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        /*if (item.getItemId() == R.id.courses) {
-            startActivity(new Intent(this, CoursesActivity.class));
-        }*/
+        if (item.getItemId() == R.id.refresh) {
+            refresh();
+        }
         return super.onOptionsItemSelected(item);
     }
 }

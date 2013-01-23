@@ -55,11 +55,16 @@ public class MessageCreator extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String result) {    
 		if(result.equals("true"))
 		{
-			ListView lv = (ListView) ((Activity) c).findViewById(R.id.message_list);
+			((MainActivity) c).refresh();
+			/*ListView lv = (ListView) ((Activity) c).findViewById(R.id.message_list);
+			MessageListAdapter mAdapter = (MessageListAdapter) lv.getAdapter();
+			
+			
 			String [] columns = {"MESSAGEID as _id","PERSONALVOTEVALUE","NUMBEROFVOTES","MESSAGETEXT","NUMBEROFCOMMENTS"};
 		    Cursor query = DatabaseInstanceHolder.db.query("MESSAGETABLE", columns, null, null, null, null, "NUMBEROFVOTES");
 		    MessageListAdapter mAdapter = new MessageListAdapter(c,query);
 		    lv.setAdapter(mAdapter);
+			*/
 		}
     }
 

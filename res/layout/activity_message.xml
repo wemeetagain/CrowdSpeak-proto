@@ -13,17 +13,19 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:gravity="left"
         android:orientation="vertical" >
 
-        <ImageButton
+        <ToggleButton
             android:id="@+id/activity_message_upvote"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:src="@drawable/upvote_selector" />
+            android:textOn=""
+    		android:textOff=""
+            android:background="@drawable/upvote_selector" />
         
         <TextView
             android:id="@+id/activity_message_numvotes"
@@ -33,14 +35,15 @@
             android:text="Small Text"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 		
-		<ImageButton
+		<ToggleButton
 		    android:id="@+id/activity_message_downvote"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:layout_gravity="center"
 		    android:layout_weight="1"
-		    android:background="@android:color/transparent"
-		    android:src="@drawable/downvote_selector" />
+		    android:textOn=""
+    		android:textOff=""
+		    android:background="@drawable/downvote_selector" />
         
     </LinearLayout>
 

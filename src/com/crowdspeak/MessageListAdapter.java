@@ -1,9 +1,12 @@
 package com.crowdspeak;
 
+import java.util.Arrays;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,7 +30,13 @@ public class MessageListAdapter extends CursorAdapter {
 		
 		final String messageId = cursor.getString(
 				cursor.getColumnIndex("_id"));
-		final String selection = "MESSAGEID = " + messageId;
+		final String message = cursor.getString(cursor.getColumnIndex("MESSAGETEXT"));
+		
+		String [] columns = {"MESSAGEID as _id","PERSONALVOTEVALUE as PERSONALVOTEVALUE"};
+		final String selection = "MESSAGEID=? ";
+		Cursor voteCursor = DatabaseInstanceHolder.db.
+				query("MESSAGETABLE", columns, selection, new String [] {messageId}, null, null, null);
+		voteCursor.moveToFirst();
 		final ToggleButton upvote = (ToggleButton)view.findViewById(R.id.message_layout_upvote);
 		final ToggleButton downvote = (ToggleButton)view.findViewById(R.id.message_layout_downvote);
 		upvote.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -41,11 +50,13 @@ public class MessageListAdapter extends CursorAdapter {
 				   {
 					   downvote.setChecked(false);
 					   cv.put("PERSONALVOTEVALUE", "1");
+					   Log.v(message,"upvote 1");
 					   
 				   }
 				   else
 				   {
 					   cv.put("PERSONALVOTEVALUE", "0");
+					   Log.v(message,"upvote 0");
 				   }
 				   String where = "MESSAGEID=?"; // The where clause to identify which columns to update.
 				   String[] value = { messageId }; // The value for the where clause.
@@ -64,16 +75,19 @@ public class MessageListAdapter extends CursorAdapter {
 				   {
 					   upvote.setChecked(false);
 					   cv.put("PERSONALVOTEVALUE", "-1");
+					   Log.v(message,"downvote -1");
 				   }
 				   else
 				   {
 					   cv.put("PERSONALVOTEVALUE", "0");
+					   Log.v(message,"downvote 0");
 				   }
 				   String where = "MESSAGEID=?"; // The where clause to identify which columns to update.
 				   String[] value = { messageId }; // The value for the where clause.
 
 				   // Update the database (all columns in TABLE_NAME where my_column has a value of 2 will be changed to 5)
 				   DatabaseInstanceHolder.db.update("MESSAGETABLE", cv, where, value);
+				   
 				   }
 				   });
 		TextView numvotes = (TextView)view.findViewById(R.id.message_layout_numvotes);
@@ -87,8 +101,11 @@ public class MessageListAdapter extends CursorAdapter {
 			   		}
 				   });
 		TextView numcomments = (TextView)view.findViewById(R.id.message_layout_numcomments);
-		int myVote = cursor.getInt(
-				cursor.getColumnIndex("PERSONALVOTEVALUE"));
+		
+		Log.v("",Arrays.toString(voteCursor.getColumnNames())+voteCursor.getPosition());
+		int myVote =
+				voteCursor.getInt(
+				voteCursor.getColumnIndex("PERSONALVOTEVALUE"));
 		switch (myVote)
 		{
 			case -1:
@@ -97,7 +114,8 @@ public class MessageListAdapter extends CursorAdapter {
 			case 1:
 			upvote.setChecked(true);	
 			break;
-			default: break;
+			default: downvote.setChecked(false);	
+			upvote.setChecked(false);break;
 		}
 		
 		numvotes.setText(Integer.toString(cursor.getInt(cursor.getColumnIndex("NUMBEROFVOTES"))));
