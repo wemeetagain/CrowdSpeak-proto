@@ -63,37 +63,40 @@ public final class R {
         public static final int upvote_selector=0x7f02002c;
     }
     public static final class id {
-        public static final int activity_message_downvote=0x7f080005;
-        public static final int activity_message_list=0x7f080007;
-        public static final int activity_message_numvotes=0x7f080004;
-        public static final int activity_message_text=0x7f080006;
-        public static final int activity_message_upvote=0x7f080003;
-        public static final int comment_area=0x7f080008;
-        public static final int comment_layout_downvote=0x7f08000b;
-        public static final int comment_layout_message_text=0x7f08000c;
-        public static final int comment_layout_numvotes=0x7f08000a;
-        public static final int comment_layout_upvote=0x7f080009;
-        public static final int create_button=0x7f080001;
-        public static final int create_text=0x7f080000;
-        public static final int menu_help=0x7f080013;
-        public static final int menu_settings=0x7f080012;
-        public static final int message_layout_downvote=0x7f08000f;
-        public static final int message_layout_numcomments=0x7f080011;
-        public static final int message_layout_numvotes=0x7f08000e;
-        public static final int message_layout_text=0x7f080010;
-        public static final int message_layout_upvote=0x7f08000d;
-        public static final int message_list=0x7f080002;
-        public static final int refresh=0x7f080014;
+        public static final int activity_message_downvote=0x7f080006;
+        public static final int activity_message_list=0x7f080008;
+        public static final int activity_message_numvotes=0x7f080005;
+        public static final int activity_message_text=0x7f080007;
+        public static final int activity_message_upvote=0x7f080004;
+        public static final int comment_area=0x7f080009;
+        public static final int comment_layout_downvote=0x7f08000c;
+        public static final int comment_layout_message_text=0x7f08000d;
+        public static final int comment_layout_numvotes=0x7f08000b;
+        public static final int comment_layout_upvote=0x7f08000a;
+        public static final int create_button=0x7f080002;
+        public static final int create_text=0x7f080001;
+        public static final int menu_help=0x7f080014;
+        public static final int menu_settings=0x7f080013;
+        public static final int message_layout_downvote=0x7f080010;
+        public static final int message_layout_numcomments=0x7f080012;
+        public static final int message_layout_numvotes=0x7f08000f;
+        public static final int message_layout_text=0x7f080011;
+        public static final int message_layout_upvote=0x7f08000e;
+        public static final int message_list=0x7f080003;
+        public static final int refresh=0x7f080015;
+        public static final int webView1=0x7f080000;
     }
     public static final class layout {
-        public static final int activity_main=0x7f030000;
-        public static final int activity_message=0x7f030001;
-        public static final int activity_splash=0x7f030002;
-        public static final int comment_layout=0x7f030003;
-        public static final int message_layout=0x7f030004;
+        public static final int activity_login=0x7f030000;
+        public static final int activity_main=0x7f030001;
+        public static final int activity_message=0x7f030002;
+        public static final int activity_splash=0x7f030003;
+        public static final int comment_layout=0x7f030004;
+        public static final int message_layout=0x7f030005;
     }
     public static final class menu {
-        public static final int activity_main=0x7f070000;
+        public static final int activity_login=0x7f070000;
+        public static final int activity_main=0x7f070001;
     }
     public static final class string {
         public static final int app_name=0x7f050000;
@@ -101,6 +104,7 @@ public final class R {
         public static final int menu_help=0x7f050005;
         public static final int menu_settings=0x7f050002;
         public static final int submit_message=0x7f050004;
+        public static final int title_activity_login=0x7f050006;
         public static final int title_activity_main=0x7f050003;
     }
     public static final class style {

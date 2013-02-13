@@ -60,6 +60,3 @@ public class MessageHandler implements Runnable {
 		return doc;
 	}
 }
-class Message{
-	public Message(int i, String s){}
-}

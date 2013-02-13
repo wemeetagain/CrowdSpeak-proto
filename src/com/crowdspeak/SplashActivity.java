@@ -1,5 +1,6 @@
   package com.crowdspeak;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -25,8 +26,12 @@ public class SplashActivity extends Activity {
 		+ broadcasterIP + " TEXT , " + personalVoteValue + " INTEGER , " + messageHash + " TEXT )");
          */
         
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        //login
+        Intent intent1 = new Intent(this,LoginActivity.class);
+        startActivity(intent1);
+        
+        //Intent intent2 = new Intent(this, MainActivity.class);
+        //startActivity(intent2);
         finish();
     }
 

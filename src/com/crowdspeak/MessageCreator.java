@@ -36,7 +36,7 @@ public class MessageCreator extends AsyncTask<String, Void, String> {
 		hash=hash.substring(0,15);
 		hash = "\""+ hash +"\"";
 		String query = 
-"INSERT INTO MESSAGETABLE VALUES ("+ hash +",\""+ message + "\",0,1,"+date+",1,"+myIP+",1," + hash + ")";
+"INSERT INTO MESSAGETABLE VALUES ("+ hash +",\""+ message + "\",0,1,"+date+",1,"+myIP+",1," + hash + ",0)";
 		/*
 		  messageId + " TEXT PRIMARY KEY , " 
 		+ messageBody + " TEXT , " 
