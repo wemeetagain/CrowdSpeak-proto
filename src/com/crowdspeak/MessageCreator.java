@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.ListView;
 
 
@@ -31,12 +32,13 @@ public class MessageCreator extends AsyncTask<String, Void, String> {
 		// Using DateFormat format method we can create a string 
 		// representation of a date with the defined format.
 		String date = "\""+df.format(today)+"\"";
+		
 		String myIP = "\""+Constants.getIPAddress(true)+"\"";
 		String hash = Constants.getHash(message+date+myIP);
 		hash=hash.substring(0,15);
 		hash = "\""+ hash +"\"";
 		String query = 
-"INSERT INTO MESSAGETABLE VALUES ("+ hash +",\""+ message + "\",0,1,"+date+",1,"+myIP+",1," + hash + ",0)";
+"INSERT INTO MESSAGETABLE VALUES ("+ hash +",\""+ message + "\",0,1,"+date+",0,"+myIP+",1," + hash + ",0)";
 		/*
 		  messageId + " TEXT PRIMARY KEY , " 
 		+ messageBody + " TEXT , " 
@@ -48,6 +50,7 @@ public class MessageCreator extends AsyncTask<String, Void, String> {
 		+ personalVoteValue + " INTEGER , " 
 		+ messageHash + " TEXT
 		*/
+		Log.v("createMessage",query);
 		DatabaseInstanceHolder.db.execSQL(query);
 		return "true";
 	}

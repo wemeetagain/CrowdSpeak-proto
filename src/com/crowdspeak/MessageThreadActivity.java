@@ -28,7 +28,7 @@ public class MessageThreadActivity extends Activity {
 		String messageIdString = intent.getStringExtra("message_id"); 
 		setContentView(R.layout.activity_message);
 		
-		String [] columns = {"MESSAGEID as _id","PERSONALVOTEVALUE","NUMBEROFVOTES","MESSAGETEXT"};
+		String [] columns = {"MESSAGEID as _id","PERSONALVOTEVALUE","NUMBEROFVOTES","MESSAGETEXT","SENTTOSERVER"};
 		final String selection = "MESSAGEID=? "
 				;
 		Cursor cursor = DatabaseInstanceHolder.db.
@@ -43,6 +43,7 @@ public class MessageThreadActivity extends Activity {
 		//pv=1;
 		Log.v("", Integer.toString(pv));
 		int myVote = cursor.getInt(1);
+		final int sentToServer = cursor.getInt(4);
 		
 		//selection = "MESSAGEID = " + messageId;
 		View view = getWindow().getDecorView().findViewById(android.R.id.content);
@@ -65,6 +66,8 @@ public class MessageThreadActivity extends Activity {
 				   {
 					   cv.put("PERSONALVOTEVALUE", "0");
 				   }
+				   if(sentToServer!=0)
+					   cv.put("SENTTOSERVER", 1);
 				   String where = "MESSAGEID=?"; // The where clause to identify which columns to update.
 				   String[] value = { messageId }; // The value for the where clause.
 				   
@@ -87,6 +90,8 @@ public class MessageThreadActivity extends Activity {
 				   {
 					   cv.put("PERSONALVOTEVALUE", "0");
 				   }
+				   if(sentToServer!=0)
+					   cv.put("SENTTOSERVER", 1);
 				   String where = "MESSAGEID=?"; // The where clause to identify which columns to update.
 				   String[] value = { messageId }; // The value for the where clause.
 

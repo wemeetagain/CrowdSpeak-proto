@@ -12,12 +12,12 @@
 
         <ToggleButton
             android:id="@+id/message_layout_upvote"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="42dp"
+            android:layout_height="30dp"
             android:layout_gravity="center"
-            android:textOn=""
-    		android:textOff=""
-            android:background="@drawable/upvote_selector" />
+            android:background="@drawable/upvote_selector"
+            android:textOff=""
+            android:textOn="" />
         
         <TextView
             android:id="@+id/message_layout_numvotes"
@@ -29,8 +29,8 @@
 		
 		<ToggleButton
 		    android:id="@+id/message_layout_downvote"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
+		    android:layout_width="42dp"
+            android:layout_height="30dp"
 		    android:layout_gravity="center"
 		    android:textOn=""
     		android:textOff=""

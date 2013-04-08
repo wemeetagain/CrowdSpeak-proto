@@ -56,7 +56,7 @@ public class MessageDatabaseHelper extends SQLiteOpenHelper {
 		
 		db.execSQL("CREATE TABLE " + messageTable + " ( " + messageId + " TEXT PRIMARY KEY , " + messageBody + " TEXT , " 
 				+ numComments + " INTEGER , " + broadcastBit + " INTEGER , " + creationTime + " TEXT , " + numVotes + " INTEGER , "
-				+ broadcasterIP + " TEXT , " + personalVoteValue + " INTEGER , " +sentToServer + " INTEGER ,"+ messageHash + " TEXT )");
+				+ broadcasterIP + " TEXT , " + personalVoteValue + " INTEGER , " + messageHash + " TEXT, "+sentToServer + " INTEGER )");
 		//create comment table
 		db.execSQL("CREATE TABLE " + commentTable + " ( " + commentId + " TEXT PRIMARY KEY , " + commentBody + " TEXT , "
 				+ creationTime + " TEXT , " + numVotes + " INTEGER , "	+ broadcasterIP + " TEXT , " + personalVoteValue + " INTEGER )");

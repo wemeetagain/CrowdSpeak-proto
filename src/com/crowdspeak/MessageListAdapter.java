@@ -31,12 +31,13 @@ public class MessageListAdapter extends CursorAdapter {
 		final String messageId = cursor.getString(
 				cursor.getColumnIndex("_id"));
 		final String message = cursor.getString(cursor.getColumnIndex("MESSAGETEXT"));
-		
+		final int sentToServer = cursor.getInt(cursor.getColumnIndex("SENTTOSERVER"));
 		String [] columns = {"MESSAGEID as _id","PERSONALVOTEVALUE as PERSONALVOTEVALUE"};
 		final String selection = "MESSAGEID=? ";
 		Cursor voteCursor = DatabaseInstanceHolder.db.
 				query("MESSAGETABLE", columns, selection, new String [] {messageId}, null, null, null);
 		voteCursor.moveToFirst();
+		Log.v("MessageListAdapterdoobebebe	",message+" STS = " + sentToServer);
 		final ToggleButton upvote = (ToggleButton)view.findViewById(R.id.message_layout_upvote);
 		final ToggleButton downvote = (ToggleButton)view.findViewById(R.id.message_layout_downvote);
 		upvote.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -57,6 +58,11 @@ public class MessageListAdapter extends CursorAdapter {
 				   {
 					   cv.put("PERSONALVOTEVALUE", "0");
 					   Log.v(message,"upvote 0");
+				   }
+				   if(sentToServer!=0)
+				   {
+					   cv.put("SENTTOSERVER", 1);
+					   Log.v("MessageListAdapter",message+" STS = " + sentToServer);
 				   }
 				   String where = "MESSAGEID=?"; // The where clause to identify which columns to update.
 				   String[] value = { messageId }; // The value for the where clause.
@@ -82,6 +88,11 @@ public class MessageListAdapter extends CursorAdapter {
 					   cv.put("PERSONALVOTEVALUE", "0");
 					   Log.v(message,"downvote 0");
 				   }
+				   if(sentToServer!=0)
+				   {
+					   cv.put("SENTTOSERVER", 1);
+					   Log.v("MessageListAdapter",message+" STS = " + sentToServer);
+				   }
 				   String where = "MESSAGEID=?"; // The where clause to identify which columns to update.
 				   String[] value = { messageId }; // The value for the where clause.
 
@@ -102,7 +113,7 @@ public class MessageListAdapter extends CursorAdapter {
 				   });
 		TextView numcomments = (TextView)view.findViewById(R.id.message_layout_numcomments);
 		
-		Log.v("",Arrays.toString(voteCursor.getColumnNames())+voteCursor.getPosition());
+		Log.v("MessageListAdapter",Arrays.toString(voteCursor.getColumnNames())+voteCursor.getPosition());
 		int myVote =
 				voteCursor.getInt(
 				voteCursor.getColumnIndex("PERSONALVOTEVALUE"));
@@ -118,12 +129,32 @@ public class MessageListAdapter extends CursorAdapter {
 			upvote.setChecked(false);break;
 		}
 		
-		numvotes.setText(Integer.toString(cursor.getInt(cursor.getColumnIndex("NUMBEROFVOTES"))));
+		numvotes.setText(
+				getVoteText(cursor.getInt(cursor.getColumnIndex("SENTTOSERVER")),
+						cursor.getInt(cursor.getColumnIndex("NUMBEROFVOTES")),
+						cursor.getInt(cursor.getColumnIndex("PERSONALVOTEVALUE"))));
 		message_text.setText(cursor.getString(cursor.getColumnIndex("MESSAGETEXT")));
-		numcomments.setText(Integer.toString(cursor.getInt(cursor.getColumnIndex("NUMBEROFCOMMENTS"))));
+		numcomments.setText(getTimeText(cursor.getString(cursor.getColumnIndex("CREATIONTIME"))));
 		
 	}
-
+	public String getTimeText(String t)
+	{
+		String s=t.substring(11);
+		return s;
+	}
+	public String getVoteText(int senttoserver, int numVotes, int pvv)
+	{
+		String s=""+numVotes;
+		if(senttoserver==1)
+		{
+			if(pvv==-1)
+				s+=" - 1";
+			if(pvv==1)
+				s+=" + 1";
+		}
+		return s;
+	}
+	
 	@Override
 	public View newView(Context context, Cursor cursor, ViewGroup parent) {
 		// TODO Auto-generated method stub

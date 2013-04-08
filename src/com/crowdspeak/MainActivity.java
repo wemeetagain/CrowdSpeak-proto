@@ -56,7 +56,7 @@ public class MainActivity extends Activity{
         
         
      // //////
-        String [] columns = {"MESSAGEID as _id","PERSONALVOTEVALUE","NUMBEROFVOTES","MESSAGETEXT","NUMBEROFCOMMENTS"};
+        String [] columns = {"MESSAGEID as _id","PERSONALVOTEVALUE","NUMBEROFVOTES","MESSAGETEXT","CREATIONTIME","SENTTOSERVER"};
         Cursor query = DatabaseInstanceHolder.db.query("MESSAGETABLE", columns, null, null, null, null, "NUMBEROFVOTES");
         mAdapter = new MessageListAdapter(this,query);
         lv.setAdapter(mAdapter);
@@ -71,7 +71,7 @@ public class MainActivity extends Activity{
     
     public void refresh()
     {
-    	String [] columns = {"MESSAGEID as _id","PERSONALVOTEVALUE","NUMBEROFVOTES","MESSAGETEXT","NUMBEROFCOMMENTS"};
+    	String [] columns = {"MESSAGEID as _id","PERSONALVOTEVALUE","NUMBEROFVOTES","MESSAGETEXT","CREATIONTIME","SENTTOSERVER"};
 	    Cursor query = DatabaseInstanceHolder.db.query("MESSAGETABLE", columns, null, null, null, null, "NUMBEROFVOTES");
 	    mAdapter.changeCursor(query);
     	//mAdapter.notifyDataSetChanged();

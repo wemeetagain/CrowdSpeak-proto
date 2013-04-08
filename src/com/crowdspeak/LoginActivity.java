@@ -6,7 +6,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
+import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -23,6 +25,7 @@ public class LoginActivity extends Activity {
 		final WebView webview = (WebView) findViewById(R.id.webView1);
 		CookieSyncManager.createInstance(this);
 		CookieSyncManager.getInstance().startSync();
+		
 		webview.getSettings().setJavaScriptEnabled(true);
 		webview.getSettings().setSupportMultipleWindows(true);
         webview.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
@@ -32,8 +35,10 @@ public class LoginActivity extends Activity {
 			{
 				if(url.equals("http://9.wut.se:5000/me"))
 				{
+					CookieManager cookieManager = CookieManager.getInstance();
+					Log.v("Login",cookieManager.getCookie("http://9.wut.se:5000/me"));
 					Intent intent = new Intent(c, MessageNetworkManager.class);
-					//intent.putExtra("cookie", id);
+					intent.putExtra("session", cookieManager.getCookie("http://9.wut.se:5000/me"));
 					startService(intent);
 					Intent intent2 = new Intent(c, MainActivity.class);
 			        startActivity(intent2);
@@ -44,7 +49,7 @@ public class LoginActivity extends Activity {
 			}
 		});
 
-		webview.loadUrl("http://192.168.1.120:5000/login");
+		webview.loadUrl("http://9.wut.se:5000/login");
 	}
 
 	@Override
